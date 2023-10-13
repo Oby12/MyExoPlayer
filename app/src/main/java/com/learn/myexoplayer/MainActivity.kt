@@ -6,8 +6,6 @@ import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
@@ -42,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     //unutk menghubungkan mediaController dengan service
     override fun onStart() {
         super.onStart()
+        // sessionToken berguna untuk menghubungkan mediaController dengan MediaSessionService
         val sessionToken = SessionToken(this, ComponentName(this, PlaybackService::class.java))
+        //Setelah itu, Anda dapat membuat MediaController dengan memanfaatkan SessionToken tadi.
         val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
         controllerFuture.addListener(
             { binding.playerView.player = controllerFuture.get() },
